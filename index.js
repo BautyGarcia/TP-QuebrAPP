@@ -138,11 +138,13 @@ const verifyMainForm = () => {
     const cantGrado = document.getElementById('cantAlcohol').value;
     const cantMl = document.getElementById('cantBebida').value;
     const pesoPersona = document.getElementById('peso').value;
+    const mainSelect = document.getElementById('nombreBebida');
+    const cantCheckbox = document.getElementById('alcoholCheckbox');
     let errorMessage = '';
 
-    if (cantGrado === '') {
+    if (cantGrado === '' && mainSelect.value === 'Otro') {
         errorMessage = 'Por favor, ingresar graduacion alcoholica';
-    } else if (cantMl === '') {
+    } else if (cantMl === '' && cantCheckbox.checked) {
         errorMessage = 'Por favor, ingresar cantidad de bebida';
     } else if (pesoPersona === '') {
         errorMessage = 'Por favor, ingresar peso';
