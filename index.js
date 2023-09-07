@@ -14,39 +14,39 @@ const R_Values = {
 }
 
 const infoBebidas = {
-    0: {
+    "Cerveza": {
         0: 500,
         1: 5,
     },
-    1: {
+    "Vino": {
         0: 200,
         1: 15,
     },
-    2: {
+    "Vodka": {
         0: 50,
         1: 35,
     },
-    3: {
+    "Whisky": {
         0: 100,
         1: 40,
     },
-    4: {
+    "Sake": {
         0: 150,
         1: 15,
     },
-    5: {
+    "Tequilla": {
         0: 60,
         1: 37,
     },
-    6: {
+    "Sidra": {
         0: 100,
         1: 3,
     },
-    7: {
+    "Champagne": {
         0: 125,
         1: 9,
     },
-    8: {
+    "Ginebra": {
         0: 50,
         1: 37,
     }
@@ -69,6 +69,8 @@ const infoAlcoholemia = {
     4: `No deberias poder estar usando esto`
 }
 
+const carritoBebidas = []
+
 const getAlcoholEffects = (alcoholemia) => {
     if (alcoholemia > 0 && alcoholemia < 1) {
         return infoAlcoholemia[0];
@@ -80,8 +82,94 @@ const getAlcoholEffects = (alcoholemia) => {
         return infoAlcoholemia[3];
     } else if (alcoholemia >= 4){
         return infoAlcoholemia[4];
+    } else if (alcoholemia === 0) {
+        return "Estas bien, tomate algo"
     } else {
         return 'Error';
+    }
+};
+
+const checkIfRegisterIsInCarrito = (registro) => {
+    for (let i = 0; i < carritoBebidas.length; i++) {
+        if (carritoBebidas[i].bebida === registro.bebida && carritoBebidas[i].volumen === registro.volumen && carritoBebidas[i].alcoholemia === registro.alcoholemia) {
+            carritoBebidas[i].cantidad += registro.cantidad;
+            return;
+        }
+    }
+    carritoBebidas.push(registro);
+    return;
+};
+
+const discountRegister = (index) => {
+    if (carritoBebidas[index].cantidad === 1) {
+        removeRegister(index);
+    } else {
+        carritoBebidas[index].cantidad -= 1;
+        refreshList();
+    }
+}
+
+const removeRegister = (index) => {
+    carritoBebidas.splice(index, 1);
+    refreshList();
+};
+
+const refreshList = () => {
+    const checkoutList = document.getElementById('bebidasList');
+    checkoutList.innerHTML = '';
+    for (let i = 0; i < carritoBebidas.length; i++) {
+        const li = document.createElement('li');
+        li.classList.add('register-item');
+        li.innerHTML = `
+            <div class="register-info">
+                <p>${carritoBebidas[i].cantidad} ${carritoBebidas[i].bebida} de ${carritoBebidas[i].volumen}ml</p>
+            </div>
+            <div class="register-actions">
+                <button onclick="discountRegister(${i})">-</button>
+                <button onclick="removeRegister(${i})">Eliminar</button>
+            </div>
+        `;
+        checkoutList.appendChild(li);
+    }
+};
+
+const verifyMainForm = () => {
+    const responseDiv = document.getElementById('result');
+    const cantGrado = document.getElementById('cantAlcohol').value;
+    const cantMl = document.getElementById('cantBebida').value;
+    const pesoPersona = document.getElementById('peso').value;
+    let errorMessage = '';
+
+    if (cantGrado === '') {
+        errorMessage = 'Por favor, ingresar graduacion alcoholica';
+    } else if (cantMl === '') {
+        errorMessage = 'Por favor, ingresar cantidad de bebida';
+    } else if (pesoPersona === '') {
+        errorMessage = 'Por favor, ingresar peso';
+    }
+
+    if (errorMessage !== '') {
+        responseDiv.innerHTML = `
+            <h2>Error</h2>
+            <p>${errorMessage}</p>
+        `;
+        return false;
+    } else {
+        return true;
+    }
+};
+
+const VerifyCheckoutForm = () => {
+    const responseDiv = document.getElementById('result');
+
+    if (carritoBebidas.length === 0) {
+        responseDiv.innerHTML = `
+            <h2>Error</h2>
+            <p>Por favor, ingresar al menos una bebida</p>
+        `;
+        return false;
+    } else {
+        return true;
     }
 };
 
@@ -91,51 +179,81 @@ document.addEventListener('DOMContentLoaded', function() {
     const cantGrado = document.getElementById('cantAlcohol');
     const cantCheckbox = document.getElementById('alcoholCheckbox');
     const cantMl = document.getElementById('cantBebida');
+    const checkoutForm = document.getElementById("checkoutForm");
 
     cantCheckbox.addEventListener('change', function(event) {
         if (event.target.checked) {
             cantMl.style.display = 'block';
-            console.log("mostrar cant ml");
         } else {
             cantMl.style.display = 'none';
-            console.log("no mostrar cant ml");
         }
     });
 
     mainSelect.addEventListener('change', function(event) {
         const bebida = event.target.value;
-        if (bebida !== '88') {
+        if (bebida !== 'Otro') {
             cantGrado.style.display = 'none';
-            console.log("no mostrar grado");
         } else {
             cantGrado.style.display = 'block';
-            console.log("mostrar cant ml");
         }
     });
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        
+        if (!verifyMainForm()) {
+            return;
+        }
+
         const pesoPersona = document.getElementById('peso').value;
         const sexoPersona = document.getElementById('sexo').value;
         const tipoCuerpo = document.getElementById('tipoCuerpo').value;
         const bebida = document.getElementById('nombreBebida').value;
-        const responseDiv = document.getElementById('result');
         const RPersona = R_Values[sexoPersona][tipoCuerpo];
 
         if (!cantCheckbox.checked) {
             cantMl.value = infoBebidas[bebida][0];
         }
 
-        if (mainSelect.value !== '88') {
+        if (mainSelect.value !== 'Otro') {
             cantGrado.value = infoBebidas[bebida][1];
         }
 
-        const alcoholemia = ((((cantMl.value * cantGrado.value) * 0.789) / 100) / (pesoPersona * RPersona)).toFixed(2);
+        const alcoholemia = ((((cantMl.value * cantGrado.value) * 0.789) / 100) / (pesoPersona * RPersona));
+        const volumen = cantMl.value;
+        const cantidad = 1;
+
+        const registroBebida = {
+            bebida,
+            volumen,
+            alcoholemia,
+            cantidad
+        }
+
+        checkIfRegisterIsInCarrito(registroBebida);
+        refreshList();
+
+        console.log(carritoBebidas);
+    });
+
+    checkoutForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        if (!VerifyCheckoutForm()) {
+            return;
+        }
+
+        console.log(carritoBebidas[0].alcoholemia);
+        const responseDiv = document.getElementById('result');
+        let alcoholemiaFinal = 0;
+
+        for (let i = 0; i < carritoBebidas.length; i++) {
+            alcoholemiaFinal += (carritoBebidas[i].alcoholemia) * carritoBebidas[i].cantidad;
+        }
+
+        const effects = getAlcoholEffects(alcoholemiaFinal);
 
         responseDiv.innerHTML = `
-            <h1>La alcoholemia es de ${alcoholemia} g/l</h1>
-            <p>${getAlcoholEffects(alcoholemia)}</p>
+            <h2>Alcoholemia Final: ${alcoholemiaFinal.toFixed(2)}</h2>
+            <p>${effects}</p>
         `;
     });
 });

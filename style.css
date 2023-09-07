@@ -112,13 +112,23 @@ p {
 }
 
 #checkoutForm {
+    /* Existing styles for the form container */
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: left;
     margin-top: 20px;
-    max-width: 60%;
+    min-width: 40%;
+    height: 87%;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: space-between; /* Vertically space children */
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center; /* Center horizontally */
 }
 
 #checkoutForm h1 {
@@ -149,4 +159,60 @@ p {
         width: 90%;
         margin: 20px auto;
     }
+}
+
+/* Styles for the list */
+#bebidasList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#bebidasList li {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+#bebidasList li span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#bebidasList button {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#bebidasList button:hover {
+    background-color: #e54928;
+}
+
+.register-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.register-info {
+    flex: 1; /* Grow to fill available space */
+}
+
+.register-actions {
+    margin-left: 10px;
+    display: flex;
+    gap: 5px; /* Adjust the gap between buttons */
 }

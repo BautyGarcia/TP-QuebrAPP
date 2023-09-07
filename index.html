@@ -12,21 +12,21 @@
     <div id="container">
         <form id="mainForm">
             <select id="nombreBebida">
-                <option value="0">Cerveza</option>
-                <option value="1">Vino</option>
-                <option value="2">Vodka</option>
-                <option value="3">Whisky</option>
-                <option value="4">Sake</option>
-                <option value="5">Tequila</option>
-                <option value="6">Sidra</option>
-                <option value="7">Champagne</option>
-                <option value="8">Ginebra</option>
-                <option value="88" selected>Otro</option>
+                <option value="Cerveza">Cerveza</option>
+                <option value="Vino">Vino</option>
+                <option value="Vodka">Vodka</option>
+                <option value="Whisky">Whisky</option>
+                <option value="Sake">Sake</option>
+                <option value="Tequilla">Tequila</option>
+                <option value="Sidra">Sidra</option>
+                <option value="Champagne">Champagne</option>
+                <option value="Ginebra">Ginebra</option>
+                <option value="Otro" selected>Otro</option>
             </select>
-            <input type="number" placeholder="Graduacion Alcoholica" id="cantAlcohol" min="0" />
+            <input type="number" placeholder="Graduacion Alcoholica" id="cantAlcohol" min="0"/>
             <label for="cantBebida"><input id="alcoholCheckbox" type="checkbox" checked>¿Sabes cuanto tomaste?</label>
-            <input type="number" placeholder="Cantidad de alcohol (ml)" id="cantBebida" min="0" />
-            <input type="number" placeholder="Peso (kg)" id="peso" min="0" />
+            <input type="number" placeholder="Cantidad de alcohol (ml)" id="cantBebida" min="0"/>
+            <input type="number" placeholder="Peso (kg)" id="peso" min="0"/>
             <select id="sexo">
                 <option value="0">Hombre</option>
                 <option value="1">Mujer</option>
@@ -37,11 +37,13 @@
                 <option value="2">Pícnico: Cuerpo redondeado y robusto, de baja estatura</option>
                 <option value="3">Otro</option>
             </select>
-            <button type="submit">Calcular</button>
+            <button type="submit">Agregar</button>
         </form>
         <form id="checkoutForm">
-            <h1>asdasdas</h1>
-            <button type="submit">Checkout</button>
+            <ul id="bebidasList"></ul>
+            <div class="form-buttons">
+                <button type="submit">Calcular</button>
+            </div>
         </form>
     </div>
     <div id="result"></div>
