@@ -1,0 +1,152 @@
+/* Reset some default styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Global styles */
+body {
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+}
+
+h1 {
+    color: #ff5733;
+}
+
+/* Form styling */
+#mainForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    text-align: left;
+    margin-top: 20px;
+    max-width: 60%;
+}
+
+#mainForm select,
+#mainForm input[type="number"],
+#mainForm button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#mainForm button {
+    margin: 0;
+}
+
+#mainForm input[type="number"] {
+    width: 95%;
+}
+
+#mainForm select {
+    background-color: #f9f9f9;
+}
+
+#mainForm input[type="checkbox"] {
+    display: inline;
+}
+
+#mainForm label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#mainForm button {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#mainForm button:hover {
+    background-color: #e54928;
+}
+
+/* Result container */
+#result {
+    flex-grow: 1; /* Take up all available vertical space */
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* Add a scrollbar if content exceeds the height */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+    #mainForm {
+        width: 90%;
+        margin: 20px auto;
+    }
+}
+
+p {
+    font-size: 16px; /* Adjust the font size as needed */
+    line-height: 1.5; /* Adjust the line height for better readability */
+    margin: 10px 0; /* Add some margin for spacing */
+    color: #333; /* Text color */
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#checkoutForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    margin-top: 20px;
+    max-width: 60%;
+}
+
+#checkoutForm h1 {
+    color: #ff5733;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#checkoutForm button {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#checkoutForm button:hover {
+    background-color: #e54928;
+}
+
+/* Center the checkout form on smaller screens */
+@media (max-width: 600px) {
+    #checkoutForm {
+        width: 90%;
+        margin: 20px auto;
+    }
+}
