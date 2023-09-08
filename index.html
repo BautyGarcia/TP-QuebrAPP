@@ -11,6 +11,7 @@
 <body>
     <div id="container">
         <form id="mainForm">
+            <label class="sectionDivider" id="topLabel" for="nombreBebida">Bebida</label>
             <select id="nombreBebida">
                 <option value="Cerveza">Cerveza</option>
                 <option value="Vino">Vino</option>
@@ -21,11 +22,14 @@
                 <option value="Sidra">Sidra</option>
                 <option value="Champagne">Champagne</option>
                 <option value="Ginebra">Ginebra</option>
+                <option value="Fernet">Fernet</option>
                 <option value="Otro" selected>Otro</option>
             </select>
             <input type="number" placeholder="Graduacion Alcoholica" id="cantAlcohol" min="0"/>
+            <label class="sectionDivider" for="cantBebida">Cantidad</label>
             <label for="cantBebida"><input id="alcoholCheckbox" type="checkbox" checked>¿Sabes cuanto tomaste?</label>
             <input type="number" placeholder="Cantidad de alcohol (ml)" id="cantBebida" min="0"/>
+            <label class="sectionDivider" for="peso">Datos Personales</label>
             <input type="number" placeholder="Peso (kg)" id="peso" min="0"/>
             <select id="sexo">
                 <option value="0">Hombre</option>

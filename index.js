@@ -49,24 +49,28 @@ const infoBebidas = {
     "Ginebra": {
         0: 50,
         1: 37,
+    },
+    "Fernet": {
+        0: 100,
+        1: 40
     }
 }
 
 const infoAlcoholemia = {
-    0 : `Se afectan los centros corticales:
-    Memoria, atención y juicio están perturbados. Dificultad para asociar ideas.
-    Falta de compostura y de autocrítica.
-    La depresión de los centros corticales superiores, inhibe los centros corticales inferiores, que resultan ser los regulan el comportamiento, si se liberan se pierden los "buenos modales" (conducta más espontánea e infantil).`,
-    1: `Se afectan los centros subcorticales, que intervienen
-    en la postura y movimientos voluntarios.
-    Hay alteraciones en el habla, en la postura, en la marcha y diplopía (visión doble).
-    La falta de autocontrol puede llevar a agresividad y a actos de violencia.`,
-    2: `Se deprimen los centros espinales (los más internos).
-    Sueño profundo que puede llevar a inconciencia, estupor y coma.`,
-    3: `Se deprimen los centros bulbares, éstos controlan
-    la respiración y la función cardiovascular.
-    El coma puede ser profundo y desencadenarse una parálisis respiratoria.`,
-    4: `No deberias poder estar usando esto`
+    0 : [`Se afectan los centros corticales:
+    Memoria, atención y juicio están perturbados.`, `Dificultad para asociar ideas.`,`
+    Falta de compostura y de autocrítica.`,`
+    La depresión de los centros corticales superiores, inhibe los centros corticales inferiores, que resultan ser los regulan el comportamiento, si se liberan se pierden los "buenos modales" (conducta más espontánea e infantil).`],
+    1: [`Se afectan los centros subcorticales, que intervienen
+    en la postura y movimientos voluntarios.`,`
+    Hay alteraciones en el habla, en la postura, en la marcha y diplopía (visión doble).`,`
+    La falta de autocontrol puede llevar a agresividad y a actos de violencia.`],
+    2: [`Se deprimen los centros espinales (los más internos).`,`
+    Sueño profundo que puede llevar a inconciencia, estupor y coma.`],
+    3: [`Se deprimen los centros bulbares, éstos controlan
+    la respiración y la función cardiovascular.`,`
+    El coma puede ser profundo y desencadenarse una parálisis respiratoria.`],
+    4: [`No deberias poder estar usando esto`]
 }
 
 const carritoBebidas = []
@@ -83,9 +87,9 @@ const getAlcoholEffects = (alcoholemia) => {
     } else if (alcoholemia >= 4){
         return infoAlcoholemia[4];
     } else if (alcoholemia === 0) {
-        return "Estas bien, tomate algo"
+        return ["Estas bien, tomate algo"]
     } else {
-        return 'Error';
+        return ['Error'];
     }
 };
 
@@ -182,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cantCheckbox = document.getElementById('alcoholCheckbox');
     const cantMl = document.getElementById('cantBebida');
     const checkoutForm = document.getElementById("checkoutForm");
+    const responseDiv = document.getElementById('result');
 
     cantCheckbox.addEventListener('change', function(event) {
         if (event.target.checked) {
@@ -233,19 +238,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         checkIfRegisterIsInCarrito(registroBebida);
         refreshList();
-
-        console.log(carritoBebidas);
     });
 
     checkoutForm.addEventListener("submit", function(event) {
         event.preventDefault();
+        let effectshtml = ``;
+        let alcoholemiaFinal = 0;
+        
         if (!VerifyCheckoutForm()) {
             return;
         }
-
-        console.log(carritoBebidas[0].alcoholemia);
-        const responseDiv = document.getElementById('result');
-        let alcoholemiaFinal = 0;
 
         for (let i = 0; i < carritoBebidas.length; i++) {
             alcoholemiaFinal += (carritoBebidas[i].alcoholemia) * carritoBebidas[i].cantidad;
@@ -253,9 +255,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const effects = getAlcoholEffects(alcoholemiaFinal);
 
+        for (let i = 0; i < effects.length; i++) {
+            effectshtml += `- ${effects[i]} <br>`;
+        }
+
         responseDiv.innerHTML = `
             <h2>Alcoholemia Final: ${alcoholemiaFinal.toFixed(2)}</h2>
-            <p>${effects}</p>
+            <p>
+                ${effectshtml}
+            </p>
+            <button type="button" id="restartButton">Reiniciar</button>
         `;
+
+        responseDiv.scrollIntoView({ behavior: 'smooth' });
+
+        document.getElementById('restartButton').addEventListener('click', function() {
+            carritoBebidas.length = 0;
+            refreshList();
+            responseDiv.innerHTML = '';
+            mainSelect.value = 'Otro';
+            cantGrado.value = '';
+            cantMl.value = '';
+            document.getElementById('peso').value = '';
+            document.getElementById('sexo').value = '0';
+            document.getElementById('tipoCuerpo').value = '0';
+        });
     });
 });

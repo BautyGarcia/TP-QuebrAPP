@@ -3,12 +3,12 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: visible; /* Add vertical scrollbar to the entire page */
 }
 
-/* Global styles */
 body {
     background-color: #f0f0f0;
     color: #333;
@@ -86,7 +86,6 @@ h1 {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    overflow-y: auto; /* Add a scrollbar if content exceeds the height */
 }
 
 /* Media queries for responsiveness */
@@ -120,10 +119,23 @@ p {
     text-align: left;
     margin-top: 20px;
     min-width: 40%;
-    height: 87%;
+    height: 89%;
     display: flex;
     flex-direction: column; /* Stack children vertically */
     justify-content: space-between; /* Vertically space children */
+}
+
+#checkoutForm button,
+#restartButton {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .form-buttons {
@@ -137,17 +149,6 @@ p {
     margin-bottom: 20px;
 }
 
-#checkoutForm button {
-    background-color: #ff5733;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
 
 #checkoutForm button:hover {
     background-color: #e54928;
@@ -215,4 +216,13 @@ p {
     margin-left: 10px;
     display: flex;
     gap: 5px; /* Adjust the gap between buttons */
+}
+
+.sectionDivider {
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: block;
+    padding-top: 5px;
 }
